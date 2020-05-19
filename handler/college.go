@@ -10,6 +10,7 @@ import (
 )
 
 func getCollegeHandler(w http.ResponseWriter, r *http.Request) {
+	w.Header().Add("Content-Type", "application/json")
 	collegeId := r.URL.Query().Get("id")
 	userId, _ := strconv.ParseUint(collegeId, 10, 64)
 	college, err := model.Get(userId)
@@ -22,6 +23,7 @@ func getCollegeHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func postCollegeHandler(w http.ResponseWriter, r *http.Request) {
+	w.Header().Add("Content-Type", "application/json")
 	body, _ := ioutil.ReadAll(r.Body)
 	var result model.College
 	_ = json.Unmarshal(body, &result)
