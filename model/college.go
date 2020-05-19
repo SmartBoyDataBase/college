@@ -30,3 +30,21 @@ func Create(college College) (College, error) {
 	err := row.Scan(&college.Id)
 	return college, err
 }
+
+func Put(college College) (College, error) {
+	_, err := infrastructure.DB.Exec(`
+	UPDATE college
+	SET name=$2,
+	    admin=$3
+	WHERE id=$1;
+	`, college.Id, college.Name, college.Admin)
+	return college, err
+}
+
+func Delete(id uint64) error {
+	_, err := infrastructure.DB.Exec(`
+	DELETE FROM college
+	WHERE id=$1;
+	`, id)
+	return err
+}
