@@ -82,3 +82,16 @@ func CollegeHandler(w http.ResponseWriter, r *http.Request) {
 		deleteCollegeHandler(w, r)
 	}
 }
+
+func CollegesHandler(w http.ResponseWriter, r *http.Request) {
+	w.Header().Add("Content-Type", "application/json")
+	all, err := model.All()
+	if err != nil {
+		log.Println(err)
+		w.WriteHeader(http.StatusInternalServerError)
+		_, _ = w.Write([]byte(err.Error()))
+		return
+	}
+	body, _ := json.Marshal(all)
+	_, _ = w.Write(body)
+}

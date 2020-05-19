@@ -48,3 +48,20 @@ func Delete(id uint64) error {
 	`, id)
 	return err
 }
+
+func All() ([]College, error) {
+	rows, err := infrastructure.DB.Query(`
+	SELECT (id, name, admin)
+	FROM college;
+	`)
+	if err != nil {
+		return nil, err
+	}
+	var result []College
+	for rows.Next() {
+		var college College
+		_ = rows.Scan(&college.Id, &college.Name, &college.Admin)
+		result = append(result, college)
+	}
+	return result, nil
+}
