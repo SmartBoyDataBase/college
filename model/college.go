@@ -51,7 +51,7 @@ func Delete(id uint64) error {
 
 func All() ([]College, error) {
 	rows, err := infrastructure.DB.Query(`
-	SELECT (id, name, admin)
+	SELECT id, name, admin
 	FROM college;
 	`)
 	if err != nil {
