@@ -60,7 +60,10 @@ func All() ([]College, error) {
 	var result []College
 	for rows.Next() {
 		var college College
-		_ = rows.Scan(&college.Id, &college.Name, &college.Admin)
+		err = rows.Scan(&college.Id, &college.Name, &college.Admin)
+		if err != nil {
+			return result, err
+		}
 		result = append(result, college)
 	}
 	return result, nil
